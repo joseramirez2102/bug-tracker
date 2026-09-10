@@ -50,4 +50,4 @@ jobs:
         with:
           name: Frontend Unit Tests
           path: bugtracker-frontend/test-results.xml
-          reporter: junit
+          reporter: jest-junit
