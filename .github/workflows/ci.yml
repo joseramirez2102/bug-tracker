@@ -153,8 +153,11 @@ jobs:
           npx playwright install
           npx playwright test
 
-      - name: Run Performance Tests
+      - name: Setup k6
         uses: grafana/setup-k6-action@v1
+
+      - name: Run Performance Tests
+        uses: grafana/run-k6-action@v1
         with:
           path: tests-perf/script.js
           flags: --out json=summary.json
