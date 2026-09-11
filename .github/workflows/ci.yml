@@ -125,7 +125,7 @@ jobs:
 
 
 
-  api-tests:
+  api-e2e-tests:
     runs-on: ubuntu-latest
     needs: [unit-test-backend, unit-test-frontend]
 
@@ -172,6 +172,21 @@ jobs:
           path: ./tests-api/playwright-report/
           retention-days: 30
 
+      - name: Upload E2E Test Results Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-tests-results
+          path: ./tests-e2e/test-results/
+          retention-days: 30
+
+      - name: Upload E2E Test Playwright Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-tests-playwright-report
+          path: ./tests-e2e/playwright-report/
+          retention-days: 30
 
       - name: Publish API Test Results
         uses: dorny/test-reporter@v1
@@ -179,4 +194,12 @@ jobs:
         with:
           name: API Tests Report
           path: ./tests-api/test-results/*.xml
+          reporter: jest-junit
+
+      - name: Publish E2E Test Results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: E2E Tests Report
+          path: ./tests-e2e/test-results/results.xml
           reporter: jest-junit
